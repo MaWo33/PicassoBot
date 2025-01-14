@@ -16,7 +16,7 @@ void joySelect() {
       joyYDir = 512 * (joyYDir / joySize);
     }
 
-    if (joySelectPage < 0) joySelectPage = 2; //Pages
+    /*if (joySelectPage < 0) joySelectPage = 2; //Pages
     if (joySelectPage > 2) joySelectPage = 0;
     
     if (abs(joyXDir) > 100 || abs(joyYDir) > 100) {
@@ -30,8 +30,9 @@ void joySelect() {
       else if (JoyAngle > 22.5 + 45 * 6 && JoyAngle <= 67.5 + 45 * 6) joySelectOption = 6;
       else joySelectOption = 1;
     } 
-    else joySelectOption = 0;
-    
+    else joySelectOption = 0;*/
+    joySelectOption = rot.getPosition();
+
     if (oldJoySelectOption != joySelectOption || JSPress == true) {
       if(JSPress) cycleMotor();
       oldJoySelectOption = joySelectOption;

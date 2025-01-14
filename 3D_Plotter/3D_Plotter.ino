@@ -33,8 +33,8 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 #define SD_MOSI 51
 #define SD_MISO 50
 
-#define ROT_A A10
-#define ROT_B A12
+#define ROT_A 2
+#define ROT_B 19
 #define ROT_BUT 44
 #include <math.h>
 
@@ -79,6 +79,8 @@ float globalSizeMultiplier = 1;
 
 String gcodes[16] ={};
 
+Rotary rot = Rotary(ROT_A, ROT_A);
+
 void coolStepping(long, long = 0, bool = false);
 void uncoolStep(long, long, long, bool = false);
 void SinusCool(long, long = 1000, long = 5000, long = 69);
@@ -118,8 +120,6 @@ void setup() {
   pinMode(ENABLE_PIN, OUTPUT);
   digitalWrite(ENABLE_PIN, HIGH);
 
-  pinMode(ROT_A, INPUT);
-  pinMode(ROT_B, INPUT);
   pinMode(ROT_BUT, INPUT);
 
   Serial.begin(9600);
