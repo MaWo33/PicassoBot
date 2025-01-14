@@ -6,9 +6,11 @@ bool JSPress;
 String JSType = "default";
 
 void joySelect() {
+  rot.setLowerBound(0);
   while (true) {
+    rot.loop();
     if (Serial.available() != 0 || Serial2.available() != 0) { break; } //breaks for Text Input
-    float joyXDir = (analogRead(JOY_X) - 512) * -1;                     //JoyStickInput
+    /*float joyXDir = (analogRead(JOY_X) - 512) * -1;                     //JoyStickInput
     float joyYDir = (analogRead(JOY_Y) - 512) * -1;
     float joySize = sqrt(sq(joyXDir) + sq(joyYDir));
     if (joySize > 512) {
@@ -16,7 +18,7 @@ void joySelect() {
       joyYDir = 512 * (joyYDir / joySize);
     }
 
-    /*if (joySelectPage < 0) joySelectPage = 2; //Pages
+    if (joySelectPage < 0) joySelectPage = 2; //Pages
     if (joySelectPage > 2) joySelectPage = 0;
     
     if (abs(joyXDir) > 100 || abs(joyYDir) > 100) {
@@ -31,7 +33,10 @@ void joySelect() {
       else joySelectOption = 1;
     } 
     else joySelectOption = 0;*/
-    joySelectOption = rot.getPosition();
+    joySelectOption = rot.getPosition()/4; //Rotary
+    Serial.print(joySelectOption);
+    Serial.print("  |  ");
+    Serial.println(rot.getPosition());
 
     if (oldJoySelectOption != joySelectOption || JSPress == true) {
       if(JSPress) cycleMotor();
@@ -51,7 +56,7 @@ void joySelect() {
       }
       
       lcd.setCursor(0, 1);
-      if(joySelectOption > 0) joySelectOption += joySelectPage *6;
+      /*if(joySelectOption > 0) joySelectOption += joySelectPage *6;
       else if(joySelectOption < 0)
         switch (joySelectOption){
           case -1:
@@ -64,7 +69,7 @@ void joySelect() {
             break;
           default:
             lcd.print("Unknown Error");
-        }
+        }*/
       if(JSType == "default"){
         switch (joySelectOption) {
           case 0:
@@ -142,12 +147,15 @@ void joySelect() {
         }
       }
     }
-    if(JSPress) cycleMotor();
-    JSPress = false;
-    if (digitalRead(JOY_B) && confirmed != true) { //Press
+    if(JSPress) {
+      cycleMotor();
+      oldJoySelectOption =-1;
+      JSPress = false;
+    }
+    if (digitalRead(ROT_BUT) && confirmed != true) { //Press
       confirmed = true;
     }
-    else if (!digitalRead(JOY_B) && confirmed == true){
+    else if (!digitalRead(ROT_BUT) && confirmed == true){
       confirmed = false;
       JSPress = true;
     }

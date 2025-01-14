@@ -36,6 +36,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 #define ROT_A 2
 #define ROT_B 19
 #define ROT_BUT 44
+
 #include <math.h>
 
 
@@ -79,7 +80,7 @@ float globalSizeMultiplier = 1;
 
 String gcodes[16] ={};
 
-Rotary rot = Rotary(ROT_A, ROT_A);
+Rotary rot = Rotary(ROT_A, ROT_B);
 
 void coolStepping(long, long = 0, bool = false);
 void uncoolStep(long, long, long, bool = false);
@@ -146,6 +147,8 @@ void setup() {
   lcd.print("DAS IST ROBOTIK");
   lcd.setCursor(0, 1);
   lcd.print(":D");
+
+
 }
 void loop() {
   joySelect();
