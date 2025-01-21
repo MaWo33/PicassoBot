@@ -1,5 +1,5 @@
 int joySelectOption;
-int oldJoySelectOption = 8;
+int oldRotaryPosition;
 int joySelectPage;
 bool confirmed;
 bool JSPress;
@@ -7,9 +7,9 @@ String JSType = "default";
 
 void joySelect() {
   rot.setLowerBound(0);
-  while (true) {
+  if (true) {
     rot.loop();
-    if (Serial.available() != 0 || Serial2.available() != 0) { break; } //breaks for Text Input
+    //if (Serial.available() != 0 || Serial2.available() != 0) { break; } //breaks for Text Input
     /*float joyXDir = (analogRead(JOY_X) - 512) * -1;                     //JoyStickInput
     float joyYDir = (analogRead(JOY_Y) - 512) * -1;
     float joySize = sqrt(sq(joyXDir) + sq(joyYDir));
@@ -33,14 +33,16 @@ void joySelect() {
       else joySelectOption = 1;
     } 
     else joySelectOption = 0;*/
-    joySelectOption = rot.getPosition()/4; //Rotary
-    Serial.print(joySelectOption);
+    /*Serial.print(joySelectOption);
     Serial.print("  |  ");
-    Serial.println(rot.getPosition());
+    Serial.println(rot.getPosition());*/
 
-    if (oldJoySelectOption != joySelectOption || JSPress == true) {
+    if (oldRotaryPosition != rot.getPosition() || JSPress == true) {
       if(JSPress) cycleMotor();
-      oldJoySelectOption = joySelectOption;
+      if(oldRotaryPosition < rot.getPosition()) joySelectOption++;
+      else joySelectOption--;
+      oldRotaryPosition = rot.getPosition();
+      Serial.println(rot.getPosition());
       lcd.clear();
       if(JSType=="default"){
           lcd.setCursor(1, 0);
@@ -149,7 +151,7 @@ void joySelect() {
     }
     if(JSPress) {
       cycleMotor();
-      oldJoySelectOption =-1;
+      oldRotaryPosition =-1;
       JSPress = false;
     }
     if (digitalRead(ROT_BUT) && confirmed != true) { //Press
