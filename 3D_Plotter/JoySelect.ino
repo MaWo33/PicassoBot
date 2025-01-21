@@ -3,12 +3,18 @@ int oldRotaryPosition;
 int joySelectPage;
 bool confirmed;
 bool JSPress;
+bool RotatoryTurnComplete;
 String JSType = "default";
+
+
+// Interrupt Service Routine (ISR)
+ISR(TIMER1_COMPA_vect) {
+  rot.loop();
+}
 
 void joySelect() {
   rot.setLowerBound(0);
   if (true) {
-    rot.loop();
     //if (Serial.available() != 0 || Serial2.available() != 0) { break; } //breaks for Text Input
     /*float joyXDir = (analogRead(JOY_X) - 512) * -1;                     //JoyStickInput
     float joyYDir = (analogRead(JOY_Y) - 512) * -1;
@@ -39,11 +45,11 @@ void joySelect() {
 
     if (oldRotaryPosition != rot.getPosition() || JSPress == true) {
       if(JSPress) cycleMotor();
-      if(oldRotaryPosition < rot.getPosition()) joySelectOption++;
-      else joySelectOption--;
+      joySelectOption = rot.getPosition()/4;
       oldRotaryPosition = rot.getPosition();
       Serial.println(rot.getPosition());
       lcd.clear();
+
       if(JSType=="default"){
           lcd.setCursor(1, 0);
           lcd.print("Schnellauswahl");
@@ -110,7 +116,7 @@ void joySelect() {
         if(JSPress)downZ();
         switch (joySelectOption) {
           case 0:
-            lcd.print("Seite " + String(joySelectPage + 1));
+            lcd.print("Zurueck");
             if(JSPress) JSType = "default";
             break;
           case 1:
@@ -136,8 +142,8 @@ void joySelect() {
       }
       else if(JSType=="gcode"){
         if(joySelectOption == 0){
-          lcd.print("Seite " + String(joySelectPage + 1));
-          if(JSPress) JSType = "default";
+          lcd.print("Zurueck");
+          if(JSPress && joySelectOption != -1) JSType = "default";
         }
         else if(joySelectOption == 1){
           lcd.print("Get gcodes");
@@ -146,6 +152,10 @@ void joySelect() {
         else if(joySelectOption > 1 && joySelectOption <= 1000){
           lcd.print(gcodes[joySelectOption -2]);
           if(JSPress) parseGC(gcodes[joySelectOption -2]);
+        }
+        if(JSPress){
+          upZ();
+          JSType = "default";
         }
       }
     }

@@ -93,6 +93,28 @@ void cubicBezier(long, long = 0, long = 2000, long = 2000, long = 5000, long = 5
 void butterfly(long, long = 1000, long = 1000);
 
 void setup() {
+
+  //set interrupt time bits
+  //Setup timer interrupt
+  // Reset Timer1 control registers
+  TCCR1A = 0;
+  TCCR1B = 0;
+  
+  // Set Timer1 to CTC mode
+  TCCR1B |= (1 << WGM12);
+  
+  // Set prescaler to 256
+  TCCR1B |= (1 << CS12);
+  
+  // Set compare match value for 1 second interrupt
+  OCR1A = 62;
+  
+  // Enable Timer1 compare interrupt
+  TIMSK1 |= (1 << OCIE1A);
+  
+  // Enable global interrupts
+  sei();
+
   pinMode(X_STEP_PIN, OUTPUT);
   pinMode(X_DIR_PIN, OUTPUT);
   pinMode(X_ENABLE_PIN, OUTPUT);
