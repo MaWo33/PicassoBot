@@ -85,11 +85,17 @@ void joySelect() {
             break;
           case 1:
             lcd.print("GCode");
-            if(JSPress) JSType = "gcode";
+            if(JSPress){
+              JSType = "gcode";
+              rot.resetPosition();
+            }
             break;
           case 2:
             lcd.print("Form Zeichnen");
-            if(JSPress) JSType = "drawShape";
+            if(JSPress){ 
+              JSType = "drawShape";
+              rot.resetPosition();
+            };
             break;
           case 3:
             lcd.print("Size reset");
@@ -138,6 +144,7 @@ void joySelect() {
         if(JSPress){
           upZ();
           JSType = "default";
+          rot.resetPosition();
         }
       }
       else if(JSType=="gcode"){
@@ -156,6 +163,7 @@ void joySelect() {
         if(JSPress){
           upZ();
           JSType = "default";
+          rot.resetPosition();
         }
       }
     }
