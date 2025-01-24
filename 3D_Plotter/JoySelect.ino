@@ -137,6 +137,10 @@ void joySelect() {
             lcd.print("Pokéball");
             if(JSPress)sq_pokeball();
             break;
+          case 4:
+            lcd.print("Demo");
+            if(JSPress)sq_demo();
+            break;
           default:
             lcd.print("-Unbelegt-");
             break;

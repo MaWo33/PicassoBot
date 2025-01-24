@@ -81,6 +81,9 @@ void sq_cock3() {
   circleCool(4000, 12000, 4000, 360, 90);
 }
 void sq_wdg() {
+  upZ();
+  coolStepping(0,5000);
+  downZ();
   circleCool(5000, 5000, 5000, 360, 0);
   circleCool(5000, 5000, 5000, 0, 300);
   coolStepping(5000, 2000);
@@ -166,7 +169,9 @@ void sq_demo() {
     setOffset(8000, 0);
   }
   setOffset(-32000, 0);
+  upZ();
   coolStepping(0, 0);
+  downZ();
   setOffset(0, 9000);
   for (int i = 0; i < 3; i++) {
     coolStepping(0, 0);
