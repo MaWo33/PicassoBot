@@ -27,6 +27,9 @@ void parseGC(String gcFile) {
   if (file) {
     while (file.available()) {
       String line = file.readStringUntil('\n');
+      if(line.charAt(0)=='M'){
+        continue;
+      }
       // Serial.println(line);
       bool raise = false;
       if (line.charAt(1) == '0') {

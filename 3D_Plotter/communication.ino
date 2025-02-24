@@ -5,12 +5,10 @@ char receivedChars[numChars];
 void printToAllSerials(const String& message) {
   Serial.println(message);
   Serial2.println(message);
-  // Add more if your board supports them
 }
 void printToAllSerialsNoNewLine(const String& message) {
   Serial.print(message);
   Serial2.print(message);
-  // Add more if your board supports them
 }
 void recvWithEndMarker() {
   static byte ndx = 0;
@@ -91,4 +89,32 @@ long* getParams(int size) {
   }
   newData = false;
   return params;
+}
+void receiveGcode(){
+  Serial.println("entered reiceve mode");
+  while (Serial.available()==false){
+
+  }
+  delay(1000);
+  
+  long fileSize = Serial.parseInt();
+  Serial.println("OK");
+  
+  File dataFile = SD.open("gcode.txt", FILE_WRITE);
+  if (dataFile) {
+    long bytesReceived = 0;
+    while (bytesReceived < fileSize) {
+      if (Serial.available()) {
+        dataFile.write(Serial.read());
+        bytesReceived++;
+      }
+      if (bytesReceived % 63 == 0) {
+        Serial.println("OK");
+      }
+    }
+    dataFile.close();
+    Serial.println("File written successfully");
+  } else {
+    Serial.println("Error opening file");
+  }
 }

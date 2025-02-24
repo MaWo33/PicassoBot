@@ -86,6 +86,7 @@ void joySelect() {
           case 1:
             lcd.print("GCode");
             if(JSPress){
+              listGC();
               JSType = "gcode";
               rot.resetPosition();
             }
@@ -152,13 +153,9 @@ void joySelect() {
           lcd.print("Zurueck");
           if(JSPress && joySelectOption != -1) JSType = "default";
         }
-        else if(joySelectOption == 1){
-          lcd.print("Get gcodes");
-          if(JSPress) listGC();
-        }
-        else if(joySelectOption > 1 && joySelectOption <= 1000){
-          lcd.print(gcodes[joySelectOption -2]);
-          if(JSPress) parseGC(gcodes[joySelectOption -2]);
+        else if(joySelectOption > 0 && joySelectOption <= 1000){
+          lcd.print(gcodes[joySelectOption -1]);
+          if(JSPress) parseGC(gcodes[joySelectOption -1]);
         }
         if(JSPress){
           upZ();

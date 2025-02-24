@@ -71,6 +71,8 @@ bool Zdown = true;
 long sqPosX[] = { 0 };
 long sqPosY[] = { 0 };
 
+bool firstTick = false;
+
 //for bluetooth
 const int MAX_STRING_LENGTH = 100;  // Adjust this value based on your needs
 char receivedString[MAX_STRING_LENGTH];
@@ -93,7 +95,10 @@ void cubicBezier(long, long = 0, long = 2000, long = 2000, long = 5000, long = 5
 void butterfly(long, long = 1000, long = 1000);
 
 void setup() {
-
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Uploading...");
   //set interrupt time bits
   //Setup timer interrupt
   // Reset Timer1 control registers
@@ -145,7 +150,7 @@ void setup() {
 
   pinMode(ROT_BUT, INPUT);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial2.begin(9600);
 
   if (!SD.begin(SD_CS)) {
@@ -163,16 +168,13 @@ void setup() {
   cycleMotor();
   calibrate();
   cycleMotor();
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(0, 0);
-  lcd.print("DAS IST ROBOTIK");
-  lcd.setCursor(0, 1);
-  lcd.print(":D");
-
-
 }
 void loop() {
+  if(!firstTick){
+    firstTick = true;
+    lcd.clear();
+    lcd.print("Use Rotary");
+  }
   joySelect();
   if (Serial2.available() > 0)
     delay(500);
@@ -431,6 +433,9 @@ void loop() {
     }
     else if(input == "listgcode"){
       listGC();
+    }
+    else if(input == "receiveg"){
+      receiveGcode();
     }
     cycleMotor();
     receivedString[0] = '\0';
