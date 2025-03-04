@@ -98,9 +98,15 @@ void receiveGcode(){
   delay(1000);
   
   long fileSize = Serial.parseInt();
+  String fileName = "gcode.txt";
   Serial.println("OK");
-  
-  File dataFile = SD.open("gcode.txt", FILE_WRITE);
+
+  // remove the file before writting, else it will add to the existing file
+  SD.remove(fileName);
+
+  delay(100);
+
+  File dataFile = SD.open(fileName, FILE_WRITE);
   if (dataFile) {
     long bytesReceived = 0;
     while (bytesReceived < fileSize) {
