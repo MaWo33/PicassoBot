@@ -17,6 +17,7 @@ def start_sending():
     time.sleep(3)  # Give some time for Arduino to process and respond
 
     file_path = "out.gcode"
+    arduino_ack = "OK"
     # Get file size
     file_size = os.path.getsize(file_path)
 
@@ -34,7 +35,7 @@ def start_sending():
         while ser.in_waiting == 0:
             pass
         ack = ser.readline().decode().strip()
-        if ack != "OK":
+        if ack != arduino_ack:
             print("Failed to get acknowledgment from Arduino for the length")
             ser.close()
             exit()
@@ -55,7 +56,7 @@ def start_sending():
             while ser.in_waiting == 0:
                 pass
             ack = ser.readline().decode().strip()
-            if ack != "OK":
+            if ack != arduino_ack:
                 print("Failed to get acknowledgment from Arduino")
                 ser.close()
                 exit()

@@ -99,7 +99,8 @@ void receiveGcode(){
   
   long fileSize = Serial.parseInt();
   String fileName = "gcode.txt";
-  Serial.println("OK");
+  String ack = "OK";
+  Serial.println(ack);
 
   // remove the file before writting, else it will add to the existing file
   SD.remove(fileName);
@@ -114,8 +115,8 @@ void receiveGcode(){
         dataFile.write(Serial.read());
         bytesReceived++;
       }
-      if (bytesReceived % 63 == 0) {
-        Serial.println("OK");
+      if (bytesReceived % 511 == 0) {
+        Serial.println(ack);
       }
     }
     dataFile.close();
