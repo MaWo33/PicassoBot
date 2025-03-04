@@ -115,7 +115,7 @@ void receiveGcode(){
         dataFile.write(Serial.read());
         bytesReceived++;
       }
-      if (bytesReceived % 511 == 0) {
+      if (bytesReceived % 128 == 0) {
         Serial.println(ack);
       }
     }

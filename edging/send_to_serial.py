@@ -5,7 +5,7 @@ import time
 import os
 
 def start_sending():
-    ser = serial.Serial('COM7', 230400)  # Replace 'COM7' with your Arduino's port
+    ser = serial.Serial('COM7', 115200)  # Replace 'COM7' with your Arduino's port
 
     time.sleep(5)  # Wait for the serial connection to initialize
 
@@ -41,7 +41,7 @@ def start_sending():
             exit()
 
         # Send file contents in chunks
-        chunk_size = 511  # Adjust this based on Arduino's buffer size and processing speed
+        chunk_size = 128  # Adjust this based on Arduino's buffer size and processing speed
         bytes_sent = 0
         time.sleep(0.2)
         while True:

@@ -56,7 +56,7 @@ def png2gcode():
     command = [
         svg2gcode_path, "edges_me.png.svg",
         "--off", "M4", "--on", "M5", "-o", "out.gcode", "--dpi", "1",
-        "--tolerance", "1"
+        "--tolerance", "5"
     ]
 
     result = subprocess.run(command, capture_output=True, text=True)

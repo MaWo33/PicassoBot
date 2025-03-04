@@ -3,10 +3,6 @@
 #include <LiquidCrystal_I2C.h>
 #include <SD.h>
 
-//increase the Arduinos buffer size
-#define SERIAL_TX_BUFFER_SIZE 512
-#define SERIAL_RX_BUFFER_SIZE 512
-
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 #define X_STEP_PIN 54
@@ -153,7 +149,7 @@ void setup() {
 
   pinMode(ROT_BUT, INPUT);
 
-  Serial.begin(230400);
+  Serial.begin(115200);
   Serial2.begin(9600);
 
   if (!SD.begin(SD_CS)) {
