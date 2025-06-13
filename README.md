@@ -23,5 +23,9 @@ Quick Start
     Use built in Geometric Funcions by using Serial Port or LCD and Rotary
     
       Or draw G-Code by selecting with LCD and Rotary
+	
+	To use python code in ./edging you have to set up a virtual environment and install the required packages
+	by running "pip install -r requirements.txt" in ./edging
+	Remember to choose the right port for the Serial communication between your Arduino and your PC
       
 ![Example of drawn pictures](https://media.discordapp.net/attachments/1302339925462487100/1353783830561034281/1742837477316.jpg?ex=684d09b1&is=684bb831&hm=69b536740716524aeab6c1ae874328a3807fa8c9711e7a6ea987d27958cb3a32&=&format=webp&width=1141&height=856)
