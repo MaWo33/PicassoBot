@@ -2,6 +2,7 @@ import cv2
 import tkinter as tk
 from PIL import Image, ImageTk
 
+
 def start_camera_feed():
     def update_frame():
         ret, frame = cap.read()

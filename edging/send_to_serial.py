@@ -4,6 +4,7 @@ import serial
 import time
 import os
 
+
 def start_sending():
     ser = serial.Serial('COM7', 115200)  # Replace 'COM7' with your Arduino's port
 
